@@ -1,5 +1,6 @@
 <?php
 if(isset($_GET["directory"])&& !empty($_GET["directory"])){
+	$directory=$_GET["directory"];
 	$nb_fichier = 0;
 	if($dossier = opendir($_GET["directory"])){
 		while(false !== ($fichier = readdir($dossier)))
@@ -8,7 +9,8 @@ if(isset($_GET["directory"])&& !empty($_GET["directory"])){
 				$nb_fichier++;
 
 
-				if (is_dir($fichier)) {
+				if (is_dir($directory."/".$fichier)) {
+
 					echo"<div class='folder'>
 					<span class='select'>
 					<input type='checkbox' />
@@ -21,7 +23,7 @@ if(isset($_GET["directory"])&& !empty($_GET["directory"])){
 					</span>
 					</div>";	
 				}else{
-					
+
 
 					echo"<div class='file'>
 					<span class='select'>
