@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
 	lister();
 });
 
@@ -6,7 +7,7 @@ $(document).ready(function() {
 
 function getXMLHttpRequest() {
 	var xhr = null;
-	
+
 	if (window.XMLHttpRequest || window.ActiveXObject) {
 		if (window.ActiveXObject) {
 			try {
@@ -15,13 +16,13 @@ function getXMLHttpRequest() {
 				xhr = new ActiveXObject("Microsoft.XMLHTTP");
 			}
 		} else {
-			xhr = new XMLHttpRequest(); 
+			xhr = new XMLHttpRequest();
 		}
 	} else {
 		alert("Votre navigateur ne supporte pas l'objet XMLHTTPRequest...");
 		return null;
 	}
-	
+
 	return xhr;
 }
 
@@ -29,12 +30,12 @@ function getXMLHttpRequest() {
 
 function lister(){
 
-	var xhr = getXMLHttpRequest(); 
+	var xhr = getXMLHttpRequest();
 	xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
-        		
+
         		document.getElementById("body").innerHTML= xhr.responseText; // Données textuelles récupérées
-        		
+
         }
 	};
 	//modif pour fichier
@@ -42,4 +43,3 @@ function lister(){
 	xhr.send();
 
 }
-
