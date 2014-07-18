@@ -37,7 +37,8 @@ function lister(){
         		
         }
 	};
-	xhr.open("GET", "cmd/ls.php?directory="+"~", true);
+	//modif pour fichier
+	xhr.open("GET", "cmd/ls.php?directory="+"/home/geoffrey", true);
 	xhr.send();
 
 }
