@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	lister();
+	lister("/home/geoffrey");
 });
 
 
@@ -28,7 +28,7 @@ function getXMLHttpRequest() {
 
 
 
-function lister(){
+function lister(directory){
 
 	var xhr = getXMLHttpRequest();
 	xhr.onreadystatechange = function() {
@@ -39,7 +39,9 @@ function lister(){
         }
 	};
 	//modif pour fichier
-	xhr.open("GET", "cmd/ls.php?directory="+"/Users/Jean/Sites/FileMine", true);
+
+	xhr.open("GET", "cmd/ls.php?directory="+directory, true);
+
 	xhr.send();
 
 }
