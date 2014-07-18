@@ -1,7 +1,6 @@
 <?php
 if(isset($_GET["directory"])&& !empty($_GET["directory"])){
 	$nb_fichier = 0;
-	echo '<ul>';
 	if($dossier = opendir($_GET["directory"])){
 		while(false !== ($fichier = readdir($dossier)))
 		{
@@ -23,5 +22,4 @@ if(isset($_GET["directory"])&& !empty($_GET["directory"])){
 		}
 
 	}
-	echo '</ul>';
 }
