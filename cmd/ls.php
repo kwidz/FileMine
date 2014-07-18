@@ -7,6 +7,20 @@ if(isset($_GET["directory"])&& !empty($_GET["directory"])){
 		{
 			if($fichier != '.'){
 				$nb_fichier++;
+
+				if (is_dir($fichier)) {
+					echo"<div class='folder'>
+						<span class='select'>
+							<input type='checkbox' />
+						</span>
+						<span class='name'>
+							$fichier
+						</span>
+					<span class='size'>
+						2 Go
+					</span>
+			</div>";	
+				}else{
 				
 				echo"<div class='file'>
 						<span class='select'>
@@ -19,6 +33,7 @@ if(isset($_GET["directory"])&& !empty($_GET["directory"])){
 						2 Go
 					</span>
 			</div>";
+		}
 			}
 		}
 
