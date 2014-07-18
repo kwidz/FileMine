@@ -1,9 +1,8 @@
 <?php
-echo "passed !! ";
 if(isset($_GET["directory"])&& !empty($_GET["directory"])){
 	$nb_fichier = 0;
 	echo '<ul>';
-	if($dossier = opendir('/Users/Jean/Sites/FileMine')){
+	if($dossier = opendir($_GET["directory"])){
 		while(false !== ($fichier = readdir($dossier)))
 		{
 			if($fichier != '.'){

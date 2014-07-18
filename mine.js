@@ -34,11 +34,12 @@ function lister(){
 	xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
 
-        		document.getElementById("body").innerHTML= xhr.responseText; // Données textuelles récupérées
+        		document.getElementById("file_container").innerHTML= xhr.responseText; // Données textuelles récupérées
 
         }
 	};
-	xhr.open("GET", "cmd/ls.php?directory="+"~", true);
+	//modif pour fichier
+	xhr.open("GET", "cmd/ls.php?directory="+"/home/geoffrey", true);
 	xhr.send();
 
 }
