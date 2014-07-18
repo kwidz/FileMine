@@ -39,7 +39,9 @@ function lister(directory){
         }
 	};
 	//modif pour fichier
+
 	xhr.open("GET", "cmd/ls.php?directory="+directory, true);
+
 	xhr.send();
 
 }

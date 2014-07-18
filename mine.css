@@ -80,6 +80,21 @@ div#file_container span.size {
 
 /* OPTION BAR */
 
+div#options {
+	width: 50%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 15px;
+	text-align: right;
+}
+
 input[type=button] {
-	background-color: red;
+	display: inline-block;
+	font-family: "Droid Sans Mono" ,"Lucida Console";
+	border-radius: 3px;
+	border: 1px solid #1a8a6c;
+	background-color: #44b198;
+	color: white;
+	box-shadow: 0px 0px 20px #cbcbcb;
+	padding: 2 em;
 }
