@@ -1,5 +1,4 @@
 <?php 
-echo "passed !! ";
 if(isset($_GET["directory"])&& !empty($_GET["directory"])){
 	$nb_fichier = 0;
 	echo '<ul>';
