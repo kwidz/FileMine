@@ -79,3 +79,7 @@ div#file_container span.size {
 }
 
 /* OPTION BAR */
+
+input[type=button] {
+	background-color: red;
+}
