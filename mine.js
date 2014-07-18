@@ -39,7 +39,7 @@ function lister(){
         }
 	};
 	//modif pour fichier
-	xhr.open("GET", "cmd/ls.php?directory="+"/home/geoffrey", true);
+	xhr.open("GET", "cmd/ls.php?directory="+"/Users/Jean/Sites/FileMine", true);
 	xhr.send();
 
 }
