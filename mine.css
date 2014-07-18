@@ -4,5 +4,78 @@ html, body {
 }
 
 body {
-	background-color: #006699;
+	background-color: #EFEFEF;
+	font-family: "Droid Sans Mono" ,"Lucida Console";
+	color: #414141;
 }
+
+/* TITLES */
+
+div#title {
+	width: 50%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 100px;
+	font-size: 1.4em;
+}
+
+div#title span.file_mine {
+	display: inline-block;
+	width: 32%;
+}
+
+div#title span.path {
+	display: inline-block;
+	width: 65%;
+	text-align: right;
+	color: #44b198;
+}
+
+/* FILE CONTAINER */
+
+div#file_container {
+	background-color: white;
+	width: 50%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 15px;
+	box-shadow: 0px 0px 20px #cbcbcb;
+	border-radius: 7px;
+}
+
+div#file_container div.folder,
+div#file_container div.file {
+	width: 98%;
+	padding: 1%;
+	border-radius: 7px;
+	cursor: pointer;
+}
+
+div#file_container div.folder:hover,
+div#file_container div.file:hover {
+	background-color: #44b198;
+	color: white;
+}
+
+div#file_container span.select {
+	display: inline-block;
+	width: 6%;
+	text-align: center;
+}
+
+div#file_container span.name {
+	display: inline-block;
+	width: 60%;
+}
+
+div#file_container div.folder span.name {
+	font-weight: bold;
+}
+
+div#file_container span.size {
+	display: inline-block;
+	width: 30%;
+	text-align: center;
+}
+
+/* OPTION BAR */

@@ -1,7 +1,10 @@
 $(document).ready(function() {
-	$.getJSON("settings.json",function(result){
 
-		alert(result);
-
+	$.ajax( "settings.json" )
+	.done(function() {
+		alert( "success" );
+	})
+	.fail(function(test) {
+		//alert(JSON.stringify(test));
 	});
 });
