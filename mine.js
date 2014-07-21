@@ -1,47 +1,24 @@
 $(document).ready(function() {
-
-	lister("/home/geoffrey");
+	var lister = (function($dir){
+		$.get( "cmd/ls.php", { dir: $dir} ).done(function($data) {
+			if ($data) {
+				$data = JSON.parse($data);
+				if($data['err']!=''){
+					alert($data['err']);
+				}
+				else {
+					$("#path").html($data['path']);
+					$("#file_container").empty();
+					$.each($data['list'],function($i,$file){
+						$ligne = $("<div class='" + $file['type'] + "'></div>");
+						$("<span class='select'><input type='checkbox' /></span>").appendTo($ligne);
+						$("<span class='name'>" + $file['name'] + "</span>").appendTo($ligne);
+						$("<span class='size'>" + $file['size'] + "</span>").appendTo($ligne);
+						$ligne.appendTo("#file_container");
+					});
+				}
+			};
+		});
+	});
+	lister.call(this,"/");
 });
-
-
-
-function getXMLHttpRequest() {
-	var xhr = null;
-
-	if (window.XMLHttpRequest || window.ActiveXObject) {
-		if (window.ActiveXObject) {
-			try {
-				xhr = new ActiveXObject("Msxml2.XMLHTTP");
-			} catch(e) {
-				xhr = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-		} else {
-			xhr = new XMLHttpRequest();
-		}
-	} else {
-		alert("Votre navigateur ne supporte pas l'objet XMLHTTPRequest...");
-		return null;
-	}
-
-	return xhr;
-}
-
-
-
-function lister(directory){
-
-	var xhr = getXMLHttpRequest();
-	xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
-
-        		document.getElementById("file_container").innerHTML= xhr.responseText; // Données textuelles récupérées
-
-        }
-	};
-	//modif pour fichier
-
-	xhr.open("GET", "cmd/ls.php?directory="+directory, true);
-
-	xhr.send();
-
-}
