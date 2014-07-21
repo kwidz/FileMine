@@ -1,5 +1,15 @@
 $(document).ready(function() {
 	$path = "/"; // NE PAS CHANGER pour editer le chemin allez dans le fichier de configuration
+	var popopen = (function ($content) {
+		$("#popup").html($content);
+		$("#popoverlay").show();
+		$("#popup").show();
+	});
+	var popclose = (function(){
+		$("#popoverlay").hide();
+		$("#popup").hide();
+		$("#popup").empty;
+	});
 	var updatepath = (function () {
 		$("#path").empty();
 		$splitted = $path.split("/");
@@ -37,28 +47,31 @@ $(document).ready(function() {
 						$("<span class='select'><input type='checkbox' /></span>").appendTo($ligne);
 						$("<span class='name'>" + $file['name'] + "</span>").appendTo($ligne);
 						$("<span class='size'>" + $file['size'] + "</span>").appendTo($ligne);
-						if($file['name']==".."){
 							$ligne.click(function(){
-								$tmp = $path.split("/");
-								$tmp.pop();
-								$tmp = $tmp.join("/");
-								lister.call(this,$tmp);
-							});
-						}
-						else {
-							$ligne.click(function(){
-								if ($file['type']=="folder") {
+								if ($file['name']=="..") {
+									$tmp = $path.split("/");
+									$tmp.pop();
+									$tmp = $tmp.join("/");
+									lister.call(this,$tmp);
+								}
+								else if ($file['type']=="folder") {
 									$sep = "/";
 									if ($path == "/") $sep = "";
 									lister.call(this,$path + $sep + $file['name']);
 								}
+								else {
+									popopen.call(this,$file['name']);
+								}
 							});
-						}
 						$ligne.appendTo("#file_container");
 					});
 				}
 			};
 		});
 	});
+	$("#popoverlay").click(function(){
+		popclose.call(this);
+	});
+	popclose.call(this);
 	lister.call(this,$path);
 });
