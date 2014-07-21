@@ -31,6 +31,15 @@ div#title span.path {
 	color: #44b198;
 }
 
+div#title span.path a {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+div#title span.path a:hover {
+	text-decoration: underline;
+}
+
 /* FILE CONTAINER */
 
 div#file_container {
