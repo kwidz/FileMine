@@ -37,19 +37,28 @@ $(document).ready(function() {
 						$("<span class='select'><input type='checkbox' /></span>").appendTo($ligne);
 						$("<span class='name'>" + $file['name'] + "</span>").appendTo($ligne);
 						$("<span class='size'>" + $file['size'] + "</span>").appendTo($ligne);
-						$ligne.click(function(){
-							if ($file['type']=="folder") cd.call(this,$file['name']);
-						});
+						if($file['name']==".."){
+							$ligne.click(function(){
+								$tmp = $path.split("/");
+								$tmp.pop();
+								$tmp = $tmp.join("/");
+								lister.call(this,$tmp);
+							});
+						}
+						else {
+							$ligne.click(function(){
+								if ($file['type']=="folder") {
+									$sep = "/";
+									if ($path == "/") $sep = "";
+									lister.call(this,$path + $sep + $file['name']);
+								}
+							});
+						}
 						$ligne.appendTo("#file_container");
 					});
 				}
 			};
 		});
-	});
-	var cd = (function ($folder) {
-		$sep = "/";
-		if ($path == "/") $sep = "";
-		lister.call(this,$path + $sep + $folder);
 	});
 	lister.call(this,$path);
 });

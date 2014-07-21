@@ -29,6 +29,7 @@ div#title span.path {
 	width: 65%;
 	text-align: right;
 	color: #44b198;
+	font-size: .8em;
 }
 
 div#title span.path a {
