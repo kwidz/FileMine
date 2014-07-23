@@ -19,7 +19,7 @@ if(isset($_GET["dir"]) && !empty($_GET["dir"])){
 	if($dossier = @opendir($dir)){
 		$sep = "";
 		while(false !== ($fichier = readdir($dossier))){
-			if($fichier=='.' || ($settings["hidden-file"]=="n" && $fichier[0]=="." && $fichier!="..")) continue;
+			if($fichier == '.' || ($settings["show-hidden-file"]=="n" && $fichier[0]=="." && $fichier!="..")) continue;
 			$nb_fichier += 1;
 			$size = "-";
 			if (is_dir($dir."/".$fichier)) {

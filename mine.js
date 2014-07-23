@@ -1,5 +1,8 @@
 $(document).ready(function() {
 	$path = "/"; // NE PAS CHANGER pour editer le chemin allez dans le fichier de configuration
+	var error = (function ($msg) {
+		popopen.call(this,$msg);
+	});
 	var popopen = (function ($content) {
 		$("#popup").html($content);
 		$("#popoverlay").show();
@@ -36,7 +39,7 @@ $(document).ready(function() {
 			if ($data) {
 				$data = JSON.parse($data);
 				if($data['err']!=''){
-					alert($data['err']);
+					error.call(this,$data['err']);
 				}
 				else {
 					$path = $data['path'];
@@ -47,30 +50,32 @@ $(document).ready(function() {
 						$("<span class='select'><input type='checkbox' /></span>").appendTo($ligne);
 						$("<span class='name'>" + $file['name'] + "</span>").appendTo($ligne);
 						$("<span class='size'>" + $file['size'] + "</span>").appendTo($ligne);
-							$ligne.click(function(){
-								if ($file['name']=="..") {
-									$tmp = $path.split("/");
-									$tmp.pop();
-									$tmp = $tmp.join("/");
-									lister.call(this,$tmp);
-								}
-								else if ($file['type']=="folder") {
-									$sep = "/";
-									if ($path == "/") $sep = "";
-									lister.call(this,$path + $sep + $file['name']);
-								}
-								else {
-									popopen.call(this,$file['name']);
-								}
-							});
+						$ligne.click(function(){
+							if ($file['name']=="..") {
+								$tmp = $path.split("/");
+								$tmp.pop();
+								$tmp = $tmp.join("/");
+								if ($tmp=="") $tmp = "/";
+								lister.call(this,$tmp);
+							}
+							else if ($file['type']=="folder") {
+								$sep = "/";
+								if ($path == "/") $sep = "";
+								lister.call(this,$path + $sep + $file['name']);
+							}
+							else {
+								popopen.call(this,$file['name']);
+							}
+						});
 						$ligne.appendTo("#file_container");
 					});
 				}
 			};
 		});
 	});
-	$("#popoverlay").click(function(){
-		popclose.call(this);
+	$("#popoverlay").click(popclose);
+	$(document).keyup(function(e) {
+		if (e.keyCode == 27) popclose.call(this);    // esc
 	});
 	popclose.call(this);
 	lister.call(this,$path);
