@@ -19,31 +19,30 @@ if(isset($_GET["dir"]) && !empty($_GET["dir"])){
 	if($dossier = @opendir($dir)){
 		$sep = "";
 		while(false !== ($fichier = readdir($dossier))){
-			if($fichier != '.'){
-				$nb_fichier += 1;
-				$size = "-";
-				if (is_dir($dir."/".$fichier)) {
-					$type = "folder";
-				}
-				else{
-					$type = "file";
-					$size = @filesize($dir."/".$fichier);
-					if ($size >= 1073741824){
-						$size = round($size / 1073741824 * 100) / 100 . " Go";
-					}
-					elseif ($size >= 1048576){
-						$size = round($size / 1048576 * 100) / 100 . " Mo";
-					}
-					elseif ($size >= 1024){
-						$size = round($size / 1024 * 100) / 100 . " Ko";
-					}
-					else {
-						$size .= " o";
-					}
-				}
-				$result .= $sep . "{\"name\":\"$fichier\",\"type\":\"$type\",\"size\":\"$size\"}\n";
-				$sep     = ",";
+			if($fichier=='.' || ($settings["hidden-file"]=="n" && $fichier[0]=="." && $fichier!="..")) continue;
+			$nb_fichier += 1;
+			$size = "-";
+			if (is_dir($dir."/".$fichier)) {
+				$type = "folder";
 			}
+			else{
+				$type = "file";
+				$size = @filesize($dir."/".$fichier);
+				if ($size >= 1073741824){
+					$size = round($size / 1073741824 * 100) / 100 . " Go";
+				}
+				elseif ($size >= 1048576){
+					$size = round($size / 1048576 * 100) / 100 . " Mo";
+				}
+				elseif ($size >= 1024){
+					$size = round($size / 1024 * 100) / 100 . " Ko";
+				}
+				else {
+					$size .= " o";
+				}
+			}
+			$result .= $sep . "{\"name\":\"$fichier\",\"type\":\"$type\",\"size\":\"$size\"}\n";
+			$sep     = ",";
 		}
 	}
 	else {

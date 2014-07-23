@@ -1,3 +1,4 @@
 {
-	"paths": ["/"]
+	"paths"            : ["/"],
+	"show-hidden-file" : "n"
 }
