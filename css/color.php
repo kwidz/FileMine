@@ -45,6 +45,7 @@
 	outline-color: <?php echo $perfect ?>;
 }
 
+div#afile span.name,
 div#title span.path {
 	color: <?php echo $perfect ?>;
 }

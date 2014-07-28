@@ -1,17 +1,40 @@
 $(document).ready(function() {
 	$path = "/"; // NE PAS CHANGER pour editer le chemin allez dans le fichier de configuration
+	var popup = {
+		open : function ($content) {
+			$("#popup").css({
+				"width"       : this.width + "px",
+				"margin-left" : "-" + (this.width/2) + "px"
+			});
+			$("#popup").html($content);
+			$("#popoverlay").show();
+			$("#popup").show();
+		},
+		close : function () {
+			$("#popoverlay").hide();
+			$("#popup").hide();
+			$("#popup").empty;
+		},
+		width  : 400
+	};
+	var file = {
+		open : function ($chemin,$name) {
+			$cont = $("<div id='afile'></div>");
+			$("<span class='name'>" + $name + "</span>").appendTo($cont);
+			$("<input type='button' value='Download' />").appendTo($cont);
+			popup.width  = 400;
+			popup.open($cont);
+		},
+		download : function ($chemin,$name) {
+			// TODO
+		}
+	}
 	var error = (function ($msg) {
-		popopen.call(this,$msg);
-	});
-	var popopen = (function ($content) {
-		$("#popup").html($content);
-		$("#popoverlay").show();
-		$("#popup").show();
-	});
-	var popclose = (function(){
-		$("#popoverlay").hide();
-		$("#popup").hide();
-		$("#popup").empty;
+		$cont = $("<div id='error'></div>");
+		$("<span class='titre'>Error!</span>").appendTo($cont);
+		$("<span class='msg'>" + $msg + "</span>").appendTo($cont);
+		popup.width  = 500;
+		popup.open($cont);
 	});
 	var updatepath = (function () {
 		$("#path").empty();
@@ -61,10 +84,10 @@ $(document).ready(function() {
 							else if ($file['type']=="folder") {
 								$sep = "/";
 								if ($path == "/") $sep = "";
-								lister.call(this,$path + $sep + $file['name']);
+								lister.call(this,$path + $file['name']);
 							}
 							else {
-								popopen.call(this,$file['name']);
+								file.open($path,$file['name']);
 							}
 						});
 						$ligne.appendTo("#file_container");
@@ -73,10 +96,10 @@ $(document).ready(function() {
 			};
 		});
 	});
-	$("#popoverlay").click(popclose);
+	$("#popoverlay").click(popup.close);
 	$(document).keyup(function(e) {
-		if (e.keyCode == 27) popclose.call(this);    // esc
+		if (e.keyCode == 27) popup.close();    // esc
 	});
-	popclose.call(this);
+	popup.close();
 	lister.call(this,$path);
 });
