@@ -14,7 +14,7 @@ $(document).ready(function() {
 			$("#popup").hide();
 			$("#popup").empty;
 		},
-		width  : 400
+		width : 400
 	};
 	var file = {
 		open : function ($chemin,$name) {
@@ -100,6 +100,7 @@ $(document).ready(function() {
 	var finder = {
 		path : "/",
 		updatepath : function () {
+			window.location.hash = finder.path;
 			$("#path").empty();
 			$("<a>#</a>").click(function () {
 				finder.lister("/");
@@ -173,5 +174,5 @@ $(document).ready(function() {
 		if (e.keyCode == 27) popup.close();    // esc
 	});
 	popup.close();
-	finder.lister(finder.path);
+	finder.lister(window.location.hash.substring(1));
 });
