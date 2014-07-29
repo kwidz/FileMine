@@ -49,8 +49,7 @@ $(document).ready(function() {
 			});
 		},
 		download : function ($chemin,$name) {
-			// TODO
-			util.alert("download of " + $chemin + "/" + $name);
+			window.location.href = "cmd/get.php?file=" + $chemin + "/" + $name;
 		},
 		delete : function ($chemin,$name) {
 			// TODO
