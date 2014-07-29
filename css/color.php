@@ -50,6 +50,10 @@ div#title span.path {
 	color: <?php echo $perfect ?>;
 }
 
+div#popup input[type=button] {
+	color: <?php echo $darck ?>;
+}
+
 div#file_container div.folder:hover,
 div#file_container div.file:hover,
 input[type=button] {
@@ -60,6 +64,11 @@ input[type=button] {
 	border: 1px solid <?php echo $darck ?>;
 }
 
-input[type=button]:active {
+div#popup input[type=button] {
+	border-color: <?php echo $darck ?>;
+}
+
+input[type=button]:active,
+div#popup input[type=button]:active {
 	background-color: <?php echo $darck ?>;
 }

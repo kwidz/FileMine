@@ -14,20 +14,20 @@ if(isset($_GET["dir"]) && !empty($_GET["dir"])){
 	else if(substr($settings["paths"][0],-1)!="/" && $dir[0]!="/"){
 		$settings["paths"][0] .= "/";
 	}
-	$dir = $settings["paths"][0] . $dir;
+	$absolute = $settings["paths"][0] . $dir;
 	$nb_fichier = 0;
-	if($dossier = @opendir($dir)){
+	if($dossier = @opendir($absolute)){
 		$sep = "";
 		while(false !== ($fichier = readdir($dossier))){
 			if($fichier == '.' || ($settings["show-hidden-file"]=="n" && $fichier[0]=="." && $fichier!="..")) continue;
 			$nb_fichier += 1;
 			$size = "-";
-			if (is_dir($dir."/".$fichier)) {
+			if (is_dir($absolute."/".$fichier)) {
 				$type = "folder";
 			}
 			else{
 				$type = "file";
-				$size = @filesize($dir."/".$fichier);
+				$size = @filesize($absolute."/".$fichier);
 				if ($size >= 1073741824){
 					$size = round($size / 1073741824 * 100) / 100 . " Go";
 				}
@@ -46,10 +46,11 @@ if(isset($_GET["dir"]) && !empty($_GET["dir"])){
 		}
 	}
 	else {
-		$err .= "Failed to open " . $_GET["dir"];
+		$err .= "Failed to open " . $dir;
 	}
 }
 else {
 	$err .= "Missing argument.\n";
 }
+if($dir == "" || $dir[0]!="/") $dir = "/" . $dir;
 echo "{\"err\": \"$err\",\n \"list\": [ $result ],\n\"path\":\"$dir\"}";

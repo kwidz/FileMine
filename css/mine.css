@@ -102,7 +102,7 @@ input[type=button] {
 	font-family: "Droid Sans Mono" ,"Lucida Console";
 	border-radius: 3px;
 	background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1));
-	transition: box-shadow 0.25s, background-color 0.25s;
+	transition: box-shadow 0.25s, background-color 0.25s, color 0.25s;
 	color: white;
 	box-shadow: 0px 0px 20px #cbcbcb;
 	padding: 3px 5px;
@@ -144,11 +144,11 @@ div#error span.titre {
 
 div#error span.msg {
 	display: block;
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 }
 
-div#error span.input {
-	display: block;
+div#error input[type=button] {
+	margin-bottom: 20px;
 }
 
 /* POPUP */
@@ -172,4 +172,16 @@ div#popup {
 	top: 35%;
 	left: 50%;
 	box-shadow: 0px 0px 20px #2b2b2b;
+}
+
+div#popup input[type=button] {
+	background-color: white;
+	color: #787878;
+	border-color: #787878;
+	background-image: none;
+	box-shadow: none;
+}
+
+div#popup input[type=button]:active {
+	color: white;
 }
