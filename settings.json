@@ -1,5 +1,7 @@
 {
-	"paths"            : ["/"],
+	"paths"            : ["/Users/Jean"],
 	"show-hidden-file" : "n",
-	"main-color"       : "#44b198"
+	"main-color"       : "#44b198",
+	"date-format"      : "d/m/Y",
+	"time-zone"        : "Europe/Paris"
 }

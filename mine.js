@@ -20,20 +20,46 @@ $(document).ready(function() {
 		open : function ($chemin,$name) {
 			$cont = $("<div id='afile'></div>");
 			$("<span class='name'>" + $name + "</span>").appendTo($cont);
-			$("<input type='button' value='Download' />").appendTo($cont);
-			popup.width  = 400;
+			$infotable = $("<table></table>").appendTo($cont);
+			$("<input type='button' value='Download' />").click(function(){
+				file.download($chemin,$name);
+			}).appendTo($cont);
+			popup.width  = 500;
 			popup.open($cont);
+			$.get( "cmd/info.php", { file : ($chemin + "/" + $name)} ).done(function($data) {
+				if ($data) {
+					$data = JSON.parse($data);
+					if($data['err']!=''){
+						util.error($data['err']);
+					}
+					else {
+						$.each($data['info'],function($label,$info){
+							$tr = $("<tr></tr>").appendTo($infotable);
+							$("<td>" + $label + "</td>").appendTo($tr);
+							$("<td>" + $info + "</td>").appendTo($tr);
+						});
+					}
+				}
+				else {
+					util.error("Empty reply from server for " + $name);
+				}
+			}).fail(function() {
+				util.error("Failed to connect, unable to get " + $name + " informations.");
+			});
 		},
 		download : function ($chemin,$name) {
 			// TODO
+			util.alert("download of " + $chemin + "/" + $name);
 		},
 		delete : function ($chemin,$name) {
 			// TODO
+			util.alert("delete " + $chemin + "/" + $name);
 		}
 	}
 	var util = {
 		alert : function ($msg) {
 			// TODO
+			popup.open($msg);
 		},
 		confirm : function ($msg,yes,no) {
 			// TODO confirm box plus approprie
@@ -115,9 +141,12 @@ $(document).ready(function() {
 							$ligne.appendTo("#file_container");
 						});
 					}
-				};
+				}
+				else {
+					util.error("Empty reply from server for " + $dir);
+				}
 			}).fail(function() {
-				util.error("Failed to connect.");
+				util.error("Failed to connect, unable to get " + $dir + " content.");
 			});
 		}
 	}
