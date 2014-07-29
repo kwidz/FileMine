@@ -36,6 +36,7 @@ $(document).ready(function() {
 						$.each($data['info'],function($label,$info){
 							$tr = $("<tr></tr>").appendTo($infotable);
 							$("<td>" + $label + "</td>").appendTo($tr);
+							if($label=="size") $info = util.humansize($info);
 							$("<td>" + $info + "</td>").appendTo($tr);
 						});
 					}
@@ -77,6 +78,24 @@ $(document).ready(function() {
 			$("<input type='button' value='ok' />").click(popup.close).appendTo($cont);
 			popup.width  = 500;
 			popup.open($cont);
+		},
+		humansize : function ($octet) {
+			// TODO convertion mauvaise: byte et non octet
+			if($octet == "-") return $octet;
+			$octet = parseInt($octet);
+			if ($octet >= 1073741824){
+				$octet = Math.round($octet / 1073741824 * 100) / 100;
+				return $octet + " Go";
+			}
+			if ($octet >= 1048576){
+				$octet = Math.round($octet / 1048576 * 100) / 100;
+				return $octet + " Mo";
+			}
+			if ($octet >= 1024){
+				$octet = Math.round($octet / 1024 * 100) / 100;
+				return $octet + " Ko";
+			}
+			return $octet + " o";
 		}
 	}
 	var finder = {
@@ -120,7 +139,7 @@ $(document).ready(function() {
 							$ligne = $("<div class='" + $file['type'] + "'></div>");
 							$("<span class='select'><input type='checkbox' /></span>").appendTo($ligne);
 							$("<span class='name'>" + $file['name'] + "</span>").appendTo($ligne);
-							$("<span class='size'>" + $file['size'] + "</span>").appendTo($ligne);
+							$("<span class='size'>" + util.humansize($file['size']) + "</span>").appendTo($ligne);
 							$ligne.click(function(){
 								if ($file['name']=="..") {
 									$tmp = finder.path.split("/");

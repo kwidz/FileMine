@@ -28,18 +28,6 @@ if(isset($_GET["dir"]) && !empty($_GET["dir"])){
 			else{
 				$type = "file";
 				$size = @filesize($absolute."/".$fichier);
-				if ($size >= 1073741824){
-					$size = round($size / 1073741824 * 100) / 100 . " Go";
-				}
-				elseif ($size >= 1048576){
-					$size = round($size / 1048576 * 100) / 100 . " Mo";
-				}
-				elseif ($size >= 1024){
-					$size = round($size / 1024 * 100) / 100 . " Ko";
-				}
-				else {
-					$size .= " o";
-				}
 			}
 			$result .= $sep . "{\"name\":\"$fichier\",\"type\":\"$type\",\"size\":\"$size\"}\n";
 			$sep     = ",";
