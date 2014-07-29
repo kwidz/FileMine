@@ -13,9 +13,66 @@ $(document).ready(function() {
 			$("#popoverlay").hide();
 			$("#popup").hide();
 			$("#popup").empty;
+			popup.closeonclick = true;
 		},
-		width : 400
+		width : 400,
+		closeonclick : true
 	};
+	var uploader = {
+		show : function () {
+			$cont = $("<div id='uploader'></div>");
+			$("<span class='titre'>Create an empty file:</span>").appendTo($cont);
+			$form = $("<form></form>").appendTo($cont);
+			$go1 = $("<input type='submit' value='Create' />").hide();
+			$("<input type='text' name='name' />").appendTo($form).keyup(function(){
+				if($(this).val() != ""){
+					$go1.show();
+				}
+				else {
+					$go1.hide();
+				}
+			});
+			$go1.appendTo($form)
+			$form.submit(function(e){
+				alert("create file")
+				e.preventDefault();
+			});
+			$("<span class='titre'>Create an empty folder:</span>").appendTo($cont);
+			$form = $("<form></form>").appendTo($cont);
+			$go2 = $("<input type='submit' value='Create' />").hide();
+			$("<input type='text' name='name' />").appendTo($form).keyup(function(){
+				if($(this).val() != ""){
+					$go2.show();
+				}
+				else {
+					$go2.hide();
+				}
+			});
+			$go2.appendTo($form)
+			$form.submit(function(e){
+				alert("create folder")
+				e.preventDefault();
+			});
+			$("<span class='titre'>Upload some files:</span>").appendTo($cont);
+			$form = $("<form></form>").appendTo($cont);
+			$go3 = $("<input type='submit' value='Upload' />").hide();
+			$("<input type='file' name='file' />").appendTo($form).change(function(){
+				if($(this).val() != ""){
+					$go3.show();
+				}
+				else {
+					$go3.hide();
+				}
+			});
+			$go3.appendTo($form)
+			$form.submit(function(e){
+				alert("Upload file")
+				e.preventDefault();
+			});
+			$("<input type='button' value='close' />").click(popup.close).appendTo($cont);
+			popup.open($cont);
+		}
+	}
 	var file = {
 		open : function ($chemin,$name) {
 			$cont = $("<div id='afile'></div>");
@@ -129,6 +186,9 @@ $(document).ready(function() {
 				};
 			});
 		},
+		refresh : function () {
+			finder.lister(finder.path);
+		},
 		lister : function ($dir) {
 			$.get( "cmd/ls.php", { dir: $dir} ).done(function($data) {
 				if ($data) {
@@ -198,9 +258,12 @@ $(document).ready(function() {
 			file.download.apply(null,$all);
 		}
 	});
-	$("#popoverlay").click(popup.close);
+	$("#button-add").click(uploader.show);
+	$("#popoverlay").click(function () {
+		if(popup.closeonclick) popup.close();
+	});
 	$(document).keyup(function(e) {
-		if (e.keyCode == 27) popup.close();    // esc
+		if (e.keyCode == 27 && popup.closeonclick) popup.close();    // esc
 	});
 	popup.close();
 	$hash = window.location.hash.substring(1);

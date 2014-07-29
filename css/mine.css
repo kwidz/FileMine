@@ -98,7 +98,8 @@ div#options {
 	text-align: center;
 }
 
-input[type=button] {
+input[type=button],
+input[type=submit] {
 	font-family: "Droid Sans Mono" ,"Lucida Console";
 	border-radius: 3px;
 	background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1));
@@ -110,7 +111,8 @@ input[type=button] {
 	width: 80px;
 }
 
-input[type=button]:active {
+input[type=button]:active,
+input[type=submit]:active {
 	box-shadow: 0px 0px 5px #cbcbcb;
 }
 
@@ -150,6 +152,24 @@ div#afile table tr td:last-child {
 
 div#afile input {
 	margin-bottom: 25px;
+}
+
+/* UPLOADER */
+
+div#uploader {
+	width: 100%;
+	padding: 20px;
+}
+
+div#uploader input[type=text],
+div#uploader input[type=file] {
+	margin-left: 20px;
+	margin-bottom: 20px;
+	margin-top: 5px;
+}
+
+div#uploader input[type=submit] {
+	margin-left: 15px;
 }
 
 /* ERROR */
@@ -198,14 +218,25 @@ div#popup {
 	box-shadow: 0px 0px 20px #2b2b2b;
 }
 
-div#popup input[type=button] {
+div#popup input[type=button],
+div#popup input[type=submit] {
 	background-color: white;
 	color: #787878;
 	border-color: #787878;
 	background-image: none;
 	box-shadow: none;
+	padding: 0;
 }
 
-div#popup input[type=button]:active {
+div#popup input[type=button]:active,
+div#popup input[type=submit]:active {
 	color: white;
+}
+
+div#popup input[type=text] {
+	border: 1px solid #d3d3d3;
+	color: #414141;
+	padding: 3px;
+	border-radius: 2px;
+	font-size: .9em;
 }

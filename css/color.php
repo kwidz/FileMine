@@ -49,25 +49,31 @@ div#title span.path {
 	color: <?php echo $perfect ?>;
 }
 
-div#popup input[type=button] {
+div#popup input[type=button],
+div#popup input[type=submit] {
 	color: <?php echo $darck ?>;
 }
 
 div#file_container div.folder:hover,
 div#file_container div.file:hover,
-input[type=button] {
+input[type=button],
+input[type=submit] {
 	background-color: <?php echo $perfect ?>;
 }
 
-input[type=button] {
+input[type=button],
+input[type=submit] {
 	border: 1px solid <?php echo $darck ?>;
 }
 
-div#popup input[type=button] {
+div#popup input[type=button],
+div#popup input[type=submit] {
 	border-color: <?php echo $darck ?>;
 }
 
 input[type=button]:active,
-div#popup input[type=button]:active {
+input[type=submit]:active,
+div#popup input[type=button]:active,
+div#popup input[type=submit]:active {
 	background-color: <?php echo $darck ?>;
 }
