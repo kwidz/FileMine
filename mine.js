@@ -22,7 +22,7 @@ $(document).ready(function() {
 			$("<span class='name'>" + $name + "</span>").appendTo($cont);
 			$infotable = $("<table></table>").appendTo($cont);
 			$("<input type='button' value='Download' />").click(function(){
-				file.download($chemin,$name);
+				file.download($chemin + "/" + $name);
 			}).appendTo($cont);
 			popup.width  = 500;
 			popup.open($cont);
@@ -48,8 +48,12 @@ $(document).ready(function() {
 				util.error("Failed to connect, unable to get " + $name + " informations.");
 			});
 		},
-		download : function ($chemin,$name) {
-			window.location.href = "cmd/get.php?file=" + $chemin + "/" + $name;
+		download : function () {
+			$url = "cmd/get.php?";
+			$.each(arguments,function($i,$file){
+				$url += "file" + $i + "=" + $file + "&";
+			});
+			window.location.href = $url;
 		},
 		delete : function ($chemin,$name) {
 			// TODO
@@ -99,6 +103,7 @@ $(document).ready(function() {
 	}
 	var finder = {
 		path : "/",
+		selected : [],
 		updatepath : function () {
 			window.location.hash = finder.path;
 			$("#path").empty();
@@ -134,10 +139,22 @@ $(document).ready(function() {
 					else {
 						finder.path = $data['path'];
 						finder.updatepath();
+						finder.selected = [];
 						$("#file_container").empty();
 						$.each($data['list'],function($i,$file){
 							$ligne = $("<div class='" + $file['type'] + "'></div>");
-							$("<span class='select'><input type='checkbox' /></span>").appendTo($ligne);
+							$check = $("<input type='checkbox' />");
+							$check.click(function(e){
+								e.stopPropagation();
+								if (this.checked) {
+									finder.selected.push($file['name']);
+								}
+								else {
+									$index = finder.selected.indexOf($file['name']);
+									if($index !=-1) finder.selected.splice($index, 1);
+								}
+							});
+							$check.appendTo($("<span class='select'></span>").appendTo($ligne));
 							$("<span class='name'>" + $file['name'] + "</span>").appendTo($ligne);
 							$("<span class='size'>" + util.humansize($file['size']) + "</span>").appendTo($ligne);
 							$ligne.click(function(){
@@ -169,10 +186,24 @@ $(document).ready(function() {
 			});
 		}
 	}
+	$("#button-download").click(function (e) {
+		if(finder.selected.length == 0){
+			util.alert("No item selected.");
+		}
+		else {
+			$all = [];
+			$.each(finder.selected,function($i,$file){
+				$all.push(finder.path + "/" + $file);
+			});
+			file.download.apply(null,$all);
+		}
+	});
 	$("#popoverlay").click(popup.close);
 	$(document).keyup(function(e) {
 		if (e.keyCode == 27) popup.close();    // esc
 	});
 	popup.close();
-	finder.lister(window.location.hash.substring(1));
+	$hash = window.location.hash.substring(1);
+	if ($hash=="") $hash = "/";
+	finder.lister($hash);
 });
