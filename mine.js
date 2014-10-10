@@ -12,7 +12,7 @@ $(document).ready(function() {
 		close : function () {
 			$("#popoverlay").hide();
 			$("#popup").hide();
-			$("#popup").empty;
+			$("#popup").empty();
 			popup.closeonclick = true;
 		},
 		width : 400,

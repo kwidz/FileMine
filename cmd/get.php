@@ -18,6 +18,7 @@ foreach($_GET as $key => $file){
 
 if(count($all)==0){
 	exit("FileMine: cmd/get.php: missing argument.");
+	
 }
 else{
 	$absolute = $all[0];

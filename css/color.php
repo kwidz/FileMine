@@ -56,6 +56,7 @@ div#popup input[type=submit] {
 
 div#file_container div.folder:hover,
 div#file_container div.file:hover,
+div.process div.bar div,
 input[type=button],
 input[type=submit] {
 	background-color: <?php echo $perfect ?>;
