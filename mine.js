@@ -38,9 +38,9 @@ $(document).ready(function() {
 		show : function () {
 			$cont = $("<div id='uploader'></div>");
 			$("<span class='titre'>Create an empty file:</span>").appendTo($cont);
-			$form = $("<form></form>").appendTo($cont);
+			$form_1 = $("<form></form>").appendTo($cont);
 			$go1 = $("<input type='submit' value='Create' />").hide();
-			$("<input type='text' name='name' />").appendTo($form).keyup(function(){
+			$("<input type='text' id='create_file' name='name' />").appendTo($form_1).keyup(function(){
 				if($(this).val() !== ""){
 					$go1.show();
 				}
@@ -48,15 +48,24 @@ $(document).ready(function() {
 					$go1.hide();
 				}
 			});
-			$go1.appendTo($form);
-			$form.submit(function(e){
-				alert("create file");
+			$go1.appendTo($form_1);
+			$form_1.submit(function(e){
+				$.get("cmd/new.php", {path:$finder.path, file:$("#create_file").val(), type:"file" }).done(function($data) {
+					$data = JSON.parse($data);
+					if ($data.err === ""){
+						$finder.refresh();
+						$popup.close();
+					}
+					else {
+						$util.error($data.err);
+					}
+				});
 				e.preventDefault();
 			});
 			$("<span class='titre'>Create an empty folder:</span>").appendTo($cont);
-			$form = $("<form></form>").appendTo($cont);
+			$form_2 = $("<form></form>").appendTo($cont);
 			$go2 = $("<input type='submit' value='Create' />").hide();
-			$("<input type='text' name='name' />").appendTo($form).keyup(function(){
+			$("<input type='text' name='name' id='create_dir' />").appendTo($form_2).keyup(function(){
 				if($(this).val() !== ""){
 					$go2.show();
 				}
@@ -64,15 +73,24 @@ $(document).ready(function() {
 					$go2.hide();
 				}
 			});
-			$go2.appendTo($form);
-			$form.submit(function(e){
-				alert("create folder");
+			$go2.appendTo($form_2);
+			$form_2.submit(function(e){
+				$.get("cmd/new.php", {path:$finder.path, file:$("#create_dir").val(), type:"dir" }).done(function($data) {
+					$data = JSON.parse($data);
+					if ($data.err === ""){
+						$finder.refresh();
+						$popup.close();
+					}
+					else {
+						$util.error($data.err);
+					}
+				});
 				e.preventDefault();
 			});
 			$("<span class='titre'>Upload some files:</span>").appendTo($cont);
-			$form = $("<form></form>").appendTo($cont);
+			$form_3 = $("<form></form>").appendTo($cont);
 			$go3 = $("<input type='submit' value='Upload' />").hide();
-			$("<input type='file' name='file' />").appendTo($form).change(function(){
+			$("<input type='file' name='file' />").appendTo($form_3).change(function(){
 				if($(this).val() !== ""){
 					$go3.show();
 				}
@@ -80,8 +98,8 @@ $(document).ready(function() {
 					$go3.hide();
 				}
 			});
-			$go3.appendTo($form);
-			$form.submit(function(e){
+			$go3.appendTo($form_3);
+			$form_3.submit(function(e){
 				alert("Upload file");
 				e.preventDefault();
 			});

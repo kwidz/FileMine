@@ -1,6 +1,6 @@
 <?php
 
-header("Content-Type: text/plain, charset=utf-8");
+header("Content-Type: application/json, charset=utf-8");
 
 $err = "";
 

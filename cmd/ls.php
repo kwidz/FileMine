@@ -41,4 +41,5 @@ else {
 	$err .= "Missing argument.\n";
 }
 if($dir == "" || $dir[0]!="/") $dir = "/" . $dir;
+
 echo "{\"err\": \"$err\",\n \"list\": [ $result ],\n\"path\":\"$dir\"}";
