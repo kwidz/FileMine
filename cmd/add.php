@@ -1,5 +1,7 @@
 <?php
 
+header("Content-Type: text/plain, charset=utf-8");
+
 $err = "";
 
 switch ($_GET["action"]) {
@@ -8,7 +10,7 @@ switch ($_GET["action"]) {
 			$err .= "FileMine: add.php: newfile: missing argument. ";
 		}
 		else {
-			
+
 		}
 	}
 	break;

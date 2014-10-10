@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var popup = {
+	$popup = {
 		open : function ($content) {
 			$("#popup").css({
 				"width"       : this.width + "px",
@@ -13,7 +13,7 @@ $(document).ready(function() {
 			$("#popoverlay").hide();
 			$("#popup").hide();
 			$("#popup").empty();
-			popup.closeonclick = true;
+			$popup.closeonclick = true;
 		},
 		width : 400,
 		closeonclick : true
@@ -34,109 +34,109 @@ $(document).ready(function() {
 			$("#" + $id).remove();
 		}
 	};
-	var uploader = {
+	$uploader = {
 		show : function () {
 			$cont = $("<div id='uploader'></div>");
 			$("<span class='titre'>Create an empty file:</span>").appendTo($cont);
 			$form = $("<form></form>").appendTo($cont);
 			$go1 = $("<input type='submit' value='Create' />").hide();
 			$("<input type='text' name='name' />").appendTo($form).keyup(function(){
-				if($(this).val() != ""){
+				if($(this).val() !== ""){
 					$go1.show();
 				}
 				else {
 					$go1.hide();
 				}
 			});
-			$go1.appendTo($form)
+			$go1.appendTo($form);
 			$form.submit(function(e){
-				alert("create file")
+				alert("create file");
 				e.preventDefault();
 			});
 			$("<span class='titre'>Create an empty folder:</span>").appendTo($cont);
 			$form = $("<form></form>").appendTo($cont);
 			$go2 = $("<input type='submit' value='Create' />").hide();
 			$("<input type='text' name='name' />").appendTo($form).keyup(function(){
-				if($(this).val() != ""){
+				if($(this).val() !== ""){
 					$go2.show();
 				}
 				else {
 					$go2.hide();
 				}
 			});
-			$go2.appendTo($form)
+			$go2.appendTo($form);
 			$form.submit(function(e){
-				alert("create folder")
+				alert("create folder");
 				e.preventDefault();
 			});
 			$("<span class='titre'>Upload some files:</span>").appendTo($cont);
 			$form = $("<form></form>").appendTo($cont);
 			$go3 = $("<input type='submit' value='Upload' />").hide();
 			$("<input type='file' name='file' />").appendTo($form).change(function(){
-				if($(this).val() != ""){
+				if($(this).val() !== ""){
 					$go3.show();
 				}
 				else {
 					$go3.hide();
 				}
 			});
-			$go3.appendTo($form)
+			$go3.appendTo($form);
 			$form.submit(function(e){
-				alert("Upload file")
+				alert("Upload file");
 				e.preventDefault();
 			});
-			$("<input type='button' value='close' />").click(popup.close).appendTo($cont);
-			popup.open($cont);
+			$("<input type='button' value='close' />").click($popup.close).appendTo($cont);
+			$popup.open($cont);
 		}
-	}
-	var file = {
+	};
+	$file = {
 		open : function ($chemin,$name) {
 			$cont = $("<div id='afile'></div>");
 			$("<span class='name'>" + $name + "</span>").appendTo($cont);
 			$infotable = $("<table></table>").appendTo($cont);
 			$("<input type='button' value='Download' />").click(function(){
-				file.download($chemin + "/" + $name);
+				$file.download($chemin + "/" + $name);
 			}).appendTo($cont);
-			popup.width  = 500;
-			popup.open($cont);
+			$popup.width  = 500;
+			$popup.open($cont);
 			$.get( "cmd/info.php", { file : ($chemin + "/" + $name)} ).done(function($data) {
 				if ($data) {
 					$data = JSON.parse($data);
-					if($data['err']!=''){
-						util.error($data['err']);
+					if($data.err !== ''){
+						$util.error($data.err);
 					}
 					else {
-						$.each($data['info'],function($label,$info){
+						$.each($data.info,function($label,$info){
 							$tr = $("<tr></tr>").appendTo($infotable);
 							$("<td>" + $label + "</td>").appendTo($tr);
-							if($label=="size") $info = util.humansize($info);
+							if($label=="size") $info = $util.humansize($info);
 							$("<td>" + $info + "</td>").appendTo($tr);
 						});
 					}
 				}
 				else {
-					util.error("Empty reply from server for " + $name);
+					$util.error("Empty reply from server for " + $name);
 				}
 			}).fail(function() {
-				util.error("Failed to connect, unable to get " + $name + " informations.");
+				$util.error("Failed to connect, unable to get " + $name + " informations.");
 			});
 		},
 		download : function () {
 			$url = "cmd/get.php?";
-			$.each(arguments,function($i,$file){
-				$url += "file" + $i + "=" + $file + "&";
+			$.each(arguments,function($i,$fich){
+				$url += "file" + $i + "=" + $fich + "&";
 			});
 			window.location.href = $url;
 		},
 		delete : function ($chemin,$name) {
 			// TODO
-			util.alert("delete " + $chemin + "/" + $name);
+			$util.alert("delete " + $chemin + "/" + $name);
 		}
-	}
-	var util = {
+	};
+	$util = {
 		alert : function ($msg) {
 			// TODO
-			popup.open($msg);
+			$popup.open($msg);
 		},
 		confirm : function ($msg,yes,no) {
 			// TODO confirm box plus approprie
@@ -151,9 +151,9 @@ $(document).ready(function() {
 			$cont = $("<div id='error'></div>");
 			$("<span class='titre'>Error :(</span>").appendTo($cont);
 			$("<span class='msg'>" + $msg + "</span>").appendTo($cont);
-			$("<input type='button' value='ok' />").click(popup.close).appendTo($cont);
-			popup.width  = 500;
-			popup.open($cont);
+			$("<input type='button' value='ok' />").click($popup.close).appendTo($cont);
+			$popup.width  = 500;
+			$popup.open($cont);
 		},
 		humansize : function ($octet) {
 			// TODO convertion mauvaise: byte et non octet
@@ -173,81 +173,81 @@ $(document).ready(function() {
 			}
 			return $octet + " o";
 		}
-	}
-	var finder = {
+	};
+	$finder = {
 		path : "/",
 		selected : [],
 		updatepath : function () {
-			window.location.hash = finder.path;
+			window.location.hash = $finder.path;
 			$("#path").empty();
 			$("<a>#</a>").click(function () {
-				finder.lister("/");
+				$finder.lister("/");
 			}).appendTo("#path");
-			$splitted = finder.path.split("/");
+			$splitted = $finder.path.split("/");
 			$.each($splitted,function ($i,$dir){
-				if($i!=0) {
+				if($i!==0) {
 					$("<span>/</span>").appendTo("#path");
 					$lien = $("<a>" + $dir + "</a>");
 					$lien.click(function(){
-						$toopen = ""
+						$toopen = "";
 						for($j=0;$j<=$i;$j++){
 							$sep = "/";
-							if($j==0 || $j==1) $sep = "";
+							if($j===0 || $j==1) $sep = "";
 							$toopen += $sep;
 							$toopen += $splitted[$j];
 						}
-						finder.lister($toopen);
+						$finder.lister($toopen);
 					});
 					$lien.appendTo("#path");
-				};
+				}
 			});
 		},
 		refresh : function () {
-			finder.lister(finder.path);
+			$finder.lister($finder.path);
 		},
 		lister : function ($dir) {
 			$.get( "cmd/ls.php", { dir: $dir} ).done(function($data) {
 				if ($data) {
 					$data = JSON.parse($data);
-					if($data['err']!=''){
-						util.error($data['err']);
+					if($data.err!==''){
+						$util.error($data.err);
 					}
 					else {
-						finder.path = $data['path'];
-						finder.updatepath();
-						finder.selected = [];
+						$finder.path = $data.path;
+						$finder.updatepath();
+						$finder.selected = [];
 						$("#file_container").empty();
-						$.each($data['list'],function($i,$file){
-							$ligne = $("<div class='" + $file['type'] + "'></div>");
+						$.each($data.list,function($i,$fich){
+							$ligne = $("<div class='" + $fich.type + "'></div>");
 							$check = $("<input type='checkbox' />");
 							$check.click(function(e){
 								e.stopPropagation();
 								if (this.checked) {
-									finder.selected.push($file['name']);
+									$finder.selected.push($fich.name);
 								}
 								else {
-									$index = finder.selected.indexOf($file['name']);
-									if($index !=-1) finder.selected.splice($index, 1);
+									$index = $finder.selected.indexOf($fich.name);
+									if($index !=-1) $finder.selected.splice($index, 1);
 								}
 							});
 							$check.appendTo($("<span class='select'></span>").appendTo($ligne));
-							$("<span class='name'>" + $file['name'] + "</span>").appendTo($ligne);
-							$("<span class='size'>" + util.humansize($file['size']) + "</span>").appendTo($ligne);
+							$("<span class='name'>" + $fich.name + "</span>").appendTo($ligne);
+							$("<span class='size'>" + $util.humansize($fich.size) + "</span>").appendTo($ligne);
 							$ligne.click(function(){
-								if ($file['name']=="..") {
-									$tmp = finder.path.split("/");
+								if ($fich.name=="..") {
+									$tmp = $finder.path.split("/");
 									$tmp.pop();
 									$tmp = $tmp.join("/");
-									if ($tmp=="") $tmp = "/";
-									finder.lister($tmp);
+									if ($tmp==="") $tmp = "/";
+									$finder.lister($tmp);
 								}
-								else if ($file['type']=="folder") {
+								else if ($fich.type=="folder") {
 									$sep = "/";
-									if (finder.path == "/") $sep = "";
-									finder.lister(finder.path + $sep + $file['name']);
+									if ($finder.path == "/") $sep = "";
+									$finder.lister($finder.path + $sep + $fich.name);
 								}
 								else {
-									file.open(finder.path,$file['name']);
+									$file.open($finder.path,$fich.name);
 								}
 							});
 							$ligne.appendTo("#file_container");
@@ -255,34 +255,34 @@ $(document).ready(function() {
 					}
 				}
 				else {
-					util.error("Empty reply from server for " + $dir);
+					$util.error("Empty reply from server for " + $dir);
 				}
 			}).fail(function() {
-				util.error("Failed to connect, unable to get " + $dir + " content.");
+				$util.error("Failed to connect, unable to get " + $dir + " content.");
 			});
 		}
-	}
+	};
 	$("#button-download").click(function (e) {
-		if(finder.selected.length == 0){
-			util.alert("No item selected.");
+		if($finder.selected.length === 0){
+			$util.alert("No item selected.");
 		}
 		else {
 			$all = [];
-			$.each(finder.selected,function($i,$file){
-				$all.push(finder.path + "/" + $file);
+			$.each($finder.selected,function($i,$fich){
+				$all.push($finder.path + "/" + $fich);
 			});
-			file.download.apply(null,$all);
+			$file.download.apply(null,$all);
 		}
 	});
-	$("#button-add").click(uploader.show);
+	$("#button-add").click($uploader.show);
 	$("#popoverlay").click(function () {
-		if(popup.closeonclick) popup.close();
+		if($popup.closeonclick) $popup.close();
 	});
 	$(document).keyup(function(e) {
-		if (e.keyCode == 27 && popup.closeonclick) popup.close();    // esc
+		if (e.keyCode == 27 /* ESC */ && $popup.closeonclick) $popup.close();
 	});
-	popup.close();
+	$popup.close();
 	$hash = window.location.hash.substring(1);
-	if ($hash=="") $hash = "/";
-	finder.lister($hash);
+	if ($hash==="") $hash = "/";
+	$finder.lister($hash);
 });

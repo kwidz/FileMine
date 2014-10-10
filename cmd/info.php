@@ -1,6 +1,6 @@
 <?php
 
-header("Content-Type: text/plain");
+header("Content-Type: text/plain, charset=utf-8");
 
 $settings = file_get_contents("../settings.json");
 $settings = (array)json_decode($settings);
