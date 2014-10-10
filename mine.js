@@ -18,6 +18,22 @@ $(document).ready(function() {
 		width : 400,
 		closeonclick : true
 	};
+	$progressbar = {
+		create : function ($id,$name) {
+			$progress = $("<div class='process' id='" + $id + "'></div>");
+			$("<span class='percent' id='percent_" + $id + "'>0%</span>").appendTo($progress);
+			$("<span class='name' id='name_" + $id + "'>" + $name + "</span>").appendTo($progress);
+			$("<div class='bar'><div style='width:0%' id='bar_" + $id + "'></div></div>").appendTo($progress);
+			$progress.appendTo("#operation");
+		},
+		update : function ($id,$percent) {
+			$("#percent_" + $id).html($percent + "%");
+			$("#bar_" + $id).css({"width" : $percent + "%"});
+		},
+		delete : function ($id) {
+			$("#" + $id).remove();
+		}
+	};
 	var uploader = {
 		show : function () {
 			$cont = $("<div id='uploader'></div>");

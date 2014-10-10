@@ -257,6 +257,7 @@ div#operation {
 /* progress bar */
 div.process {
 	font-size: .75em;
+	margin-bottom: 15px;
 }
 
 div.process span.name {
