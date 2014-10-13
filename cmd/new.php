@@ -22,7 +22,7 @@ if(isset($_GET["path"]) && !empty($_GET["path"]) && isset($_GET["file"])  && !em
 		if(!@mkdir($absolute . $_GET["file"])) $err = "Unable to create a directory named " . $_GET["file"] . ".";
 	}
 	elseif($_GET["type"]=="file"){
-		if(!@touch($absolute . $_GET["file"])) $err = "Unable to create a file named " . $_GET["file"] . ".";
+		if(!@ltouch($absolute . $_GET["file"])) $err = "Unable to create a file named " . $_GET["file"] . ".";
 	}
 	else {
 		$err = "Wrong type.";
