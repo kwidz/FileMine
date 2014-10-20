@@ -231,6 +231,7 @@ $(document).ready(function() {
 						$util.error($data.err);
 					}
 					else {
+						$data.list.sort(sortByName);
 						$finder.path = $data.path;
 						$finder.updatepath();
 						$finder.selected = [];
@@ -304,3 +305,7 @@ $(document).ready(function() {
 	if ($hash==="") $hash = "/";
 	$finder.lister($hash);
 });
+
+function sortByName(key1, key2){
+   return key1.name > key2.name;
+}
