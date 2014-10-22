@@ -307,5 +307,5 @@ $(document).ready(function() {
 });
 
 function sortByName(key1, key2){
-   return key1.name.toUpperCase() > key2.name.toUpperCase();
+   return key1.name.toUpperCase() - key2.name.toUpperCase();
 }
