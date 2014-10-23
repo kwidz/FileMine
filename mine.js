@@ -231,6 +231,7 @@ $(document).ready(function() {
 						$util.error($data.err);
 					}
 					else {
+
 						$data.list.sort(sortByName);
 						$finder.path = $data.path;
 						$finder.updatepath();
@@ -307,5 +308,9 @@ $(document).ready(function() {
 });
 
 function sortByName(key1, key2){
-   return key1.name.toUpperCase() > key2.name.toUpperCase();
+   if(key1.name.toUpperCase() > key2.name.toUpperCase())
+		return 1;
+		else
+			return -1;
+
 }
