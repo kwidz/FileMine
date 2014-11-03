@@ -315,7 +315,9 @@ $(document).ready(function() {
 			$.each($finder.selected,function($i,$fich){
 				$all = $finder.path + "/" + $fich;
 				$.get( "cmd/rm.php", { dir: $all} ).done(function($data) {
-						alert($data);
+						$util.alert($data);
+						$finder.lister($finder.path);
+
 				});
 
 			});
