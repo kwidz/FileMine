@@ -305,12 +305,34 @@ $(document).ready(function() {
 	$hash = window.location.hash.substring(1);
 	if ($hash==="") $hash = "/";
 	$finder.lister($hash);
+
+	$("#button-delete").click(function (e) {
+		if($finder.selected.length === 0){
+			$util.alert("No item selected.");
+		}
+		else {
+			$all = [];
+			$.each($finder.selected,function($i,$fich){
+				$all = $finder.path + "/" + $fich;
+				$.get( "cmd/rm.php", { dir: $all} ).done(function($data) {
+						alert($data);
+				});
+
+			});
+
+
+		}
+	});
 });
 
+
+
+
+
 function sortByName(key1, key2){
-   if(key1.name.toUpperCase() > key2.name.toUpperCase())
+	if(key1.name.toUpperCase() > key2.name.toUpperCase())
 		return 1;
 		else
 			return -1;
 
-}
+		}
