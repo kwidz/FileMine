@@ -115,6 +115,8 @@ $(document).ready(function() {
 			$("<input type='button' value='Download' />").click(function(){
 				$file.download($chemin + "/" + $name);
 			}).appendTo($cont);
+
+			$("<input type='button' value='Copy URL' id='CopyURLPopUp' style='margin-left:5px' />").appendTo($cont);
 			$popup.width  = 500;
 			$popup.open($cont);
 			$.get( "cmd/info.php", { file : ($chemin + "/" + $name)} ).done(function($data) {
@@ -138,13 +140,44 @@ $(document).ready(function() {
 			}).fail(function() {
 				$util.error("Failed to connect, unable to get " + $name + " informations.");
 			});
+
+
+			var clientNew = new ZeroClipboard( $("#CopyURLPopUp") );
+			clientNew.on( 'load', function(clientNew) {
+				clientNew.on( 'datarequested', function(clientNew) {
+					url=$file.copyURLFunction($chemin + "/" + $name);
+					clientNew.setText(url);
+				});
+
+				clientNew.on( 'complete', function(clientNew, args) {
+					console.log("Text copied to clipboard: \n" + args.text );
+				});
+			});
+
+			clientNew.on( 'wrongflash noflash', function() {
+
+				ZeroClipboard.destroy();
+			} );
+
 		},
 		download : function () {
 			$url = "cmd/get.php?";
+
 			$.each(arguments,function($i,$fich){
+
 				$url += "file" + $i + "=" + $fich + "&";
 			});
 			window.location.href = $url;
+		},
+		copyURLFunction : function () {
+			$url = "cmd/get.php?";
+
+			$.each(arguments,function($i,$fich){
+
+				$url += "file" + $i + "=" + $fich + "&";
+			});
+
+			return $url;
 		},
 		delete : function ($chemin,$name) {
 			// TODO
@@ -294,6 +327,34 @@ $(document).ready(function() {
 			$file.download.apply(null,$all);
 		}
 	});
+	ZeroClipboard.config( { moviePath: 'zeroclipboard/ZeroClipboard.swf' } );
+	var client = new ZeroClipboard( $("#CopyURL") );
+	client.on( 'load', function(client) {
+		client.on( 'datarequested', function(client) {
+			if($finder.selected.length === 0){
+				$util.alert("No item selected.");
+			}
+			else {
+				$all = [];
+				$.each($finder.selected,function($i,$fich){
+					$all.push($finder.path + "/" + $fich);
+				});
+				url=$file.copyURLFunction.apply(null,$all);
+				client.setText(url);
+			}
+
+
+		});
+
+		client.on( 'complete', function(client, args) {
+			console.log("Text copied to clipboard: \n" + args.text );
+		});
+	});
+
+	client.on( 'wrongflash noflash', function() {
+
+		ZeroClipboard.destroy();
+	} );
 	$("#button-add").click($uploader.show);
 	$("#popoverlay").click(function () {
 		if($popup.closeonclick) $popup.close();
@@ -315,8 +376,8 @@ $(document).ready(function() {
 			$.each($finder.selected,function($i,$fich){
 				$all = $finder.path + "/" + $fich;
 				$.get( "cmd/rm.php", { dir: $all} ).done(function($data) {
-						$util.alert($data);
-						$finder.lister($finder.path);
+					$util.alert($data);
+					$finder.lister($finder.path);
 
 				});
 
