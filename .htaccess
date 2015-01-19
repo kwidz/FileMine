@@ -1,0 +1,4 @@
+AuthName "Admin Area"
+AuthType Basic
+AuthUserFile "/home/geoffrey/FileMine/.htpasswd"
+Require valid-user
