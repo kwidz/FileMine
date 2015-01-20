@@ -146,7 +146,8 @@ $(document).ready(function() {
 			clientNew.on( 'load', function(clientNew) {
 				clientNew.on( 'datarequested', function(clientNew) {
 					url=$file.copyURLFunction($chemin + "/" + $name);
-
+					var reg=new RegExp(" ", "g");
+					url=url.replace(reg,"%20");
 					clientNew.setText(window.location.host+"/"+url);
 				});
 
@@ -341,6 +342,8 @@ $(document).ready(function() {
 					$all.push($finder.path + "/" + $fich);
 				});
 				url=$file.copyURLFunction.apply(null,$all);
+				var reg=new RegExp(" ", "g");
+				url=url.replace(reg,"%20");
 				client.setText(window.location.host+"/"+url);
 			}
 
