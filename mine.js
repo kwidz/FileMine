@@ -146,7 +146,7 @@ $(document).ready(function() {
 			clientNew.on( 'load', function(clientNew) {
 				clientNew.on( 'datarequested', function(clientNew) {
 					url=$file.copyURLFunction($chemin + "/" + $name);
-					url=encodeURI(url);
+
 					clientNew.setText(window.location.host+"/"+url);
 				});
 
@@ -341,7 +341,6 @@ $(document).ready(function() {
 					$all.push($finder.path + "/" + $fich);
 				});
 				url=$file.copyURLFunction.apply(null,$all);
-				url=encodeURI(url);
 				client.setText(window.location.host+"/"+url);
 			}
 
