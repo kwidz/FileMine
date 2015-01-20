@@ -148,6 +148,12 @@ $(document).ready(function() {
 					url=$file.copyURLFunction($chemin + "/" + $name);
 					var reg=new RegExp(" ", "g");
 					url=url.replace(reg,"%20");
+					var reg=new RegExp("?", "g");
+					url=url.replace(reg,"\?");
+					var reg=new RegExp("=", "g");
+					url=url.replace(reg,"\=");
+					var reg=new RegExp("&", "g");
+					url=url.replace(reg,"\&");
 					clientNew.setText(window.location.host+"/"+url);
 				});
 
