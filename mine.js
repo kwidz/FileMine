@@ -148,8 +148,8 @@ $(document).ready(function() {
 					url=$file.copyURLFunction($chemin + "/" + $name);
 					var reg=new RegExp(" ", "g");
 					url=url.replace(reg,"%20");
-					url="http://"+url;
-					clientNew.setText(window.location.host+"/"+url);
+
+					clientNew.setText("http://"+window.location.host+"/"+url);
 				});
 
 				clientNew.on( 'complete', function(clientNew, args) {
@@ -345,8 +345,8 @@ $(document).ready(function() {
 				url=$file.copyURLFunction.apply(null,$all);
 				var reg=new RegExp(" ", "g");
 				url=url.replace(reg,"%20");
-				url="http://"+url;
-				client.setText(window.location.host+"/"+url);
+
+				client.setText("http://"+window.location.host+"/"+url);
 			}
 
 
